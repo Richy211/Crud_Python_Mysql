@@ -68,7 +68,7 @@ class formularioClientes:
             
             Button(self.groupBox, text="Guardar", width=10, command=self.guardarRegistros).grid(row=4, column=0)
             Button(self.groupBox, text="Modificar", width=10,command=self.modificarRegistros).grid(row=4, column=1)
-            Button(self.groupBox, text="Eliminar", width=10).grid(row=4, column=2)
+            Button(self.groupBox, text="Eliminar", width=10,command=self.eliminarRegistros).grid(row=4, column=2)
             
             self.groupBox = LabelFrame(self.base, text="Lista del Personal", padx=5, pady=5)
             self.groupBox.grid(row=0, column=1, padx=5, pady=5)
@@ -156,6 +156,32 @@ class formularioClientes:
             
             CClientes.modificarClientes(idUsuario,nombres, apellidos, sexo) 
             messagebox.showinfo("Informacion", "Los datos fueron actualizados")
+            
+            self.actualizarTreeView()  # Llamar a la función de instancia
+            
+            # Limpiar los campos
+            self.textBoxId.delete(0,END)
+            self.textBoxNombres.delete(0, END)
+            self.textBoxApellidos.delete(0, END)
+            
+        except ValueError as error:
+            print("Error al ingresar los datos {}".format(error))
+            
+    def eliminarRegistros(self):
+        
+        #global textBoxtextBoxNombres,textBoxApellidos,combo,groupBox 
+        
+        try:
+            # Verifica la inicializacion de los widget
+            if self.textBoxId is None: 
+                print("Los widget no estan inicializados")
+                return 
+            
+            idUsuario= self.textBoxId.get()
+        
+            
+            CClientes.eliminarClientes(idUsuario) 
+            messagebox.showinfo("Informacion", "Los datos fueron eliminados")
             
             self.actualizarTreeView()  # Llamar a la función de instancia
             
